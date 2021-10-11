@@ -2,6 +2,7 @@ package com.hanghae.dogdailyblog_miniproject.service;
 
 import com.hanghae.dogdailyblog_miniproject.dto.CmtRequestDto;
 import com.hanghae.dogdailyblog_miniproject.model.Cmt;
+import com.hanghae.dogdailyblog_miniproject.security.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -2,6 +2,7 @@ package com.hanghae.dogdailyblog_miniproject.controller;
 
 import com.hanghae.dogdailyblog_miniproject.dto.CmtRequestDto;
 import com.hanghae.dogdailyblog_miniproject.model.Cmt;
+import com.hanghae.dogdailyblog_miniproject.security.UserDetailsImpl;
 import com.hanghae.dogdailyblog_miniproject.service.CmtService;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Api(tags={"댓글 관련 APi"})
 public class CmtController {
-    private final CmtService commentService;
+    private final CmtService cmtService;
 
 
     // Create
@@ -20,7 +21,7 @@ public class CmtController {
     public Cmt commentSave(@RequestBody @ModelAttribute CmtRequestDto cmtRequestDto,
                            @AuthenticationPrincipal UserDetailsImpl userDetails
     ){
-        Cmt saveComment = cmtService.save(cmtRequestDto, userDetails);
+        Cmt saveCmt = cmtService.save(cmtRequestDto, userDetails);
 
         return saveCmt;
     }
@@ -28,7 +29,7 @@ public class CmtController {
     // Update
     @PutMapping("/detail/update")
     public Cmt commentUpdate(@RequestParam Long id, @RequestBody @ModelAttribute CmtRequestDto cmtRequestDto){
-        Cmt updateComment = commentService.update(id, cmtRequestDto);
+        Cmt updateComment = cmtService.update(id, cmtRequestDto);
 
         return updateComment;
     }
@@ -37,7 +38,7 @@ public class CmtController {
     // Delete
     @GetMapping("/detail/delete")
     public void deletePost(@RequestParam(value = "id", required = true)Long id){
-        commentService.delete(id);
+        cmtService.delete(id);
 
     }
 

@@ -4,6 +4,7 @@ import com.hanghae.dogdailyblog_miniproject.dto.CmtRequestDto;
 import com.hanghae.dogdailyblog_miniproject.model.Cmt;
 import com.hanghae.dogdailyblog_miniproject.model.Post;
 import com.hanghae.dogdailyblog_miniproject.repository.CmtRepository;
+import com.hanghae.dogdailyblog_miniproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +14,17 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class CmtServiceImpl implements  CmtService{
+public class CmtServiceImpl implements CmtService{
     private final CmtRepository commentRepository;
-    private final PostRepository boardRepository;
+    private final PostRepository postRepository;
 
     @Override
     public Cmt save(CmtRequestDto commentRequestDto, UserDetailsImpl userDetails) {
-        Post findBoard = boardRepository.findById(commentRequestDto.getPostId()).orElseThrow(
+        Post findPost = postRepository.findById(commentRequestDto.getPostId()).orElseThrow(
                 () -> new NullPointerException("같은 아이디의 게시글이 없습니다.")
         );
 
-        Cmt newComment = new Cmt(commentRequestDto.getComment(), findBoard, userDetails.getUser());
+        Cmt newComment = new Cmt(commentRequestDto.getComment(), findPost, userDetails.getUser());
 
         Cmt saveComment = commentRepository.save(newComment);
 
