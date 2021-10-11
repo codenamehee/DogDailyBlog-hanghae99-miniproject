@@ -17,16 +17,16 @@ public class ContentsController {
     private final ContentsService ContentsService;
 
     //메인페이지 게시글 조회
-    @GetMapping("/")
+    @GetMapping("/write")
     public List<Contents> getContets(){
         return ContentsRepository.findAllByOrderByCreatedAtDesc();
     }
 
     //개별 게시물 조회
-    @GetMapping("/detail/{id}")
+    @GetMapping("/write/{id}")
     public Contents getContents(@PathVariable Long id){
         Contents contents = ContentsRepository.findById(id).orElseThrow(
-                () ->new NullPointerException("id가 존재하지 않습니다."));
+                () ->new IllegalArgumentException("id가 존재하지 않습니다."));
         return contents;
     }
     //게시물 생성
@@ -35,7 +35,5 @@ public class ContentsController {
         Contents contents = new Contents(requestDto);
         return ContentsRepository.save(contents);
     }
-
-
 }
 

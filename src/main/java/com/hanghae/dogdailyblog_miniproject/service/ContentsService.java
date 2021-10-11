@@ -24,7 +24,7 @@ public class ContentsService {
             return contents;
         }
         if (titleCheck.contains("script") || titleCheck.contains("<") || titleCheck.contains(">")){
-            Contents contents = new Contents("xss 멈춰!", username, "xss 멈춰!");
+            Contents contents = new Contents("xss 멈춰",username, "xss 멈춰", "");
             ContentsRepository.save(contents);
             return contents;
         }
@@ -37,7 +37,7 @@ public class ContentsService {
     @Transactional //메소드 동작을 쿼리문임을 선언
     public Long update(Long id, ContentsRequestDto requestDto){
         Contents Contents = ContentsRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("아이디가 존재하지 않습니다.")
+                () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         Contents.update(requestDto);
         return Contents.getId();

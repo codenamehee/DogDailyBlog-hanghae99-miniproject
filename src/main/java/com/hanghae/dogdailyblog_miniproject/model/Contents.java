@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Contents {
+public class Contents extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
@@ -28,19 +28,24 @@ public class Contents {
     @Column(nullable = false)
     private String imageurl;
 
-    public Contents(String title, String username, String contents,String imageurl){
+    public Contents(String title, String username, String contents, String imageurl){
         this.title = title;
         this.username = username;
         this.contents = contents;
         this.imageurl = imageurl;
     }
+    public Contents(ContentsRequestDto requestDto){
+        this.title = requestDto.getTitle();
+        this.username = requestDto.getUsername();
+        this.contents = requestDto.getContents();
+        this.imageurl = requestDto.getImageurl();
+    }
     public Contents(ContentsRequestDto requestDto, String username){
         this.title = requestDto.getTitle();
         this.username = username;
         this.contents = requestDto.getContents();
-        this.imageurl = imageurl;
+        this.imageurl = requestDto.getImageurl();
     }
-
 
     public void update(ContentsRequestDto requestDto){
         this.title = requestDto.getTitle();
@@ -52,7 +57,7 @@ public class Contents {
         this.title = requestDto.getTitle();
         this.username = username;
         this.contents = contents;
-        this.imageurl = imageurl;
+        this.imageurl = requestDto.getImageurl();
     }
-    public Contents(ContentsRequestDto requestDto, String username, String contents)
+
 }
