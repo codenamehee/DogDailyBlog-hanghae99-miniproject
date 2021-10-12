@@ -22,7 +22,7 @@ public class UserService {
     public void registerUser(SignupRequestDto requestDto) {
         String userid = requestDto.getUserid();
         String username = requestDto.getUsername();
-        String pwd = requestDto.getPwd();
+        String pwd = passwordEncoder.encode(requestDto.getPwd());
 
         User user = new User(userid, username, pwd);
         userRepository.save(user);
