@@ -1,6 +1,5 @@
 package com.hanghae.dogdailyblog_miniproject.service;
 
-
 import com.hanghae.dogdailyblog_miniproject.dto.ContentsRequestDto;
 import com.hanghae.dogdailyblog_miniproject.model.Contents;
 import com.hanghae.dogdailyblog_miniproject.repository.ContentsRepository;

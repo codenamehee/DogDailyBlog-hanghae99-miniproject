@@ -9,3 +9,4 @@ public class ContentsRequestDto {
     private String contents;
     private String imageurl;
 }
+
