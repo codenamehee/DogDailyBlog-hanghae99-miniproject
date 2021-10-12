@@ -20,7 +20,7 @@ public class Cmt extends Timestamped { // 생성,수정 시간을 자동으로 �
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id")
     @JsonIgnore
-    private Post post;
+    private Contents contents;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
@@ -28,9 +28,9 @@ public class Cmt extends Timestamped { // 생성,수정 시간을 자동으로 �
     private User user;
 
 
-    public Cmt(String comment, Post post, User user) {
+    public Cmt(String comment, Contents contents, User user) {
         this.comment = comment;
-        this.post = post;
+        this.contents = contents;
         this.user = user;
     }
 

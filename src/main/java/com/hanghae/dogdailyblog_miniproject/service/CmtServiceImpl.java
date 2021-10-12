@@ -2,29 +2,29 @@ package com.hanghae.dogdailyblog_miniproject.service;
 
 import com.hanghae.dogdailyblog_miniproject.dto.CmtRequestDto;
 import com.hanghae.dogdailyblog_miniproject.model.Cmt;
-import com.hanghae.dogdailyblog_miniproject.model.Post;
+import com.hanghae.dogdailyblog_miniproject.model.Contents;
 import com.hanghae.dogdailyblog_miniproject.repository.CmtRepository;
+import com.hanghae.dogdailyblog_miniproject.repository.ContentsRepository;
 import com.hanghae.dogdailyblog_miniproject.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CmtServiceImpl implements CmtService{
     private final CmtRepository commentRepository;
-    private final PostRepository postRepository;
+    private final ContentsRepository contentsRepository;
 
     @Override
     public Cmt save(CmtRequestDto commentRequestDto, UserDetailsImpl userDetails) {
-        Post findPost = postRepository.findById(commentRequestDto.getPostId()).orElseThrow(
+        Contents findContents = contentsRepository.findById(commentRequestDto.getContentsId()).orElseThrow(
                 () -> new NullPointerException("같은 아이디의 게시글이 없습니다.")
         );
 
-        Cmt newComment = new Cmt(commentRequestDto.getComment(), findPost, userDetails.getUser());
+        Cmt newComment = new Cmt(commentRequestDto.getComment(), findContents, userDetails.getUser());
 
         Cmt saveComment = commentRepository.save(newComment);
 
