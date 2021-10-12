@@ -36,3 +36,4 @@ public class ContentsController {
         return ContentsRepository.save(contents);
     }
 }
+
