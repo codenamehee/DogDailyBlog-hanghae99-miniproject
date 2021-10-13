@@ -18,6 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // 로그인 요청한 회원의 회원정보 찾는 로직
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("Can't find " + username)

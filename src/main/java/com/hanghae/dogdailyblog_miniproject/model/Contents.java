@@ -59,5 +59,4 @@ public class Contents extends Timestamped {
         this.contents = contents;
         this.imageurl = requestDto.getImageurl();
     }
-
 }
