@@ -25,7 +25,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // cors 설정
         http.cors();
         http.csrf().disable();
-        http.headers().frameOptions().disable();
+//        http.headers().frameOptions().disable();
         http.authorizeRequests()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
