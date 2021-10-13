@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // 허용할 URL
-        configuration.addAllowedOrigin("http://localhost:3001");
+        configuration.addAllowedOrigin("http://localhost:3000");
         // 허용할 Header
         configuration.addAllowedHeader("*");
         // 허용할 Http Method
@@ -64,9 +64,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 로그인 처리 (POST/user/login)
                 .loginProcessingUrl("/user/login")
 //                // 로그인 처리 후 성공 시 URL
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/user/login")
 //                // 로그인 처리 후 실패 시 URL
-                .failureUrl("user/login?error")
+//                .failureUrl("user/login?error")
                 .permitAll()
                 .and()
                 .logout()
