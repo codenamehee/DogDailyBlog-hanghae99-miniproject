@@ -20,24 +20,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    // Cors 허용 적용
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-
-        // 허용할 URL
-        configuration.addAllowedOrigin("http://localhost:3000");
-        // 허용할 Header
-        configuration.addAllowedHeader("*");
-        // 허용할 Http Method
-        configuration.addAllowedMethod("*");
-        configuration.setAllowCredentials(true);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // cors 설정
@@ -78,6 +60,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .exceptionHandling()
                 //접근 불가 페이지 URL 설정
 //                .accessDeniedPage("/");
+    }
+
+    // Cors 허용 적용
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        // 허용할 URL
+        configuration.addAllowedOrigin("http://localhost:3000");
+        configuration.addAllowedOrigin("http://localhost:8080");
+        // 허용할 Header
+        configuration.addAllowedHeader("*");
+        // 허용할 Http Method
+        configuration.addAllowedMethod("*");
+//        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 
     @Bean
