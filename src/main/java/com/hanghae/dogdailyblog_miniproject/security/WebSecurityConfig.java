@@ -1,19 +1,25 @@
 package com.hanghae.dogdailyblog_miniproject.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @EnableWebSecurity
 @Configuration
+@RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
     public BCryptPasswordEncoder encodePassword() {
@@ -25,7 +31,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // cors 설정
         http.cors();
         http.csrf().disable();
-//        http.headers().frameOptions().disable();
+        http.headers().frameOptions().disable()
+                        .and()
+//                        .httpBasic().disable()
+                        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests()
                 .antMatchers("/images/**").permitAll()
                 .antMatchers("/css/**").permitAll()
@@ -39,23 +48,26 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .anyRequest().authenticated()
                 .and()
+                .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
+                        UsernamePasswordAuthenticationFilter.class);
+
                 // 로그인 기능
-                .formLogin()
+//                .formLogin()
 //                // 로그인 view 제공 (GET/user/login)
 //                .loginPage("/user/login")
                 // 로그인 처리 (POST/user/login)
-                .loginProcessingUrl("/user/login")
+//                .loginProcessingUrl("/user/login")
 //                // 로그인 처리 후 성공 시 URL
-                .defaultSuccessUrl("/user/login")
+//                .defaultSuccessUrl("/user/login")
 //                // 로그인 처리 후 실패 시 URL
 //                .failureUrl("user/login?error")
-                .permitAll()
-                .and()
-                .logout()
+//                .permitAll()
+//                .and()
+//                .logout()
                 // 로그아웃 처리
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/")
-                .permitAll();
+//                .logoutUrl("/user/logout")
+//                .logoutSuccessUrl("/")
+//                .permitAll();
 //                .and()
 //                .exceptionHandling()
                 //접근 불가 페이지 URL 설정
