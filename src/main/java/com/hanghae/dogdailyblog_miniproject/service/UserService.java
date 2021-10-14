@@ -49,7 +49,7 @@ public class UserService {
 
     public String createToken(UserRequestDto user) {
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getUserName(),user.getPassword());
+                new UsernamePasswordAuthenticationToken(user.getUserid(),user.getPwd());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtTokenProvider.createToken(authentication);
     }

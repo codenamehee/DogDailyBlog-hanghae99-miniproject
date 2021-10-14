@@ -31,6 +31,7 @@ public class UserController {
     //로그인
     @PostMapping("/user/login")
     public String login(@RequestBody UserRequestDto user) {
+
         return userService.createToken(user);
     }
 
