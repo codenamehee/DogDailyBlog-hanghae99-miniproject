@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserRequestDto {
+//    private String userid;
     private String userid;
-    private String username;
     private String pwd;
 }

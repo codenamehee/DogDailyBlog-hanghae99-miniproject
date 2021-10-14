@@ -34,10 +34,10 @@ public class UserService {
 
         String username = requestDto.getUsername();
 
-        Optional<User> found = userRepository.findByUsername(username);
-        if (found.isPresent()) {
-            throw new ApiRequestException("중복된 사용자 ID 가 존재합니다.");
-        }
+//        Optional<User> found = userRepository.findByUsername(username);
+//        if (found.isPresent()) {
+//            throw new ApiRequestException("중복된 사용자 ID 가 존재합니다.");
+//        }
 
         String password = requestDto.getPwd();
         password = passwordEncoder.encode(password);
@@ -47,9 +47,11 @@ public class UserService {
 
     }
 
+    // 토큰 생성
     public String createToken(UserRequestDto user) {
+        System.out.println("서비스에서 토큰 생성");
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPwd());
+                new UsernamePasswordAuthenticationToken(user.getUserid(), user.getPwd());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         return jwtTokenProvider.createToken(authentication);
     }

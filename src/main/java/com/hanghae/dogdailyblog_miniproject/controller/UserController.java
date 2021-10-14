@@ -31,6 +31,8 @@ public class UserController {
     //로그인
     @PostMapping("/user/login")
     public String login(@RequestBody UserRequestDto user) {
+        System.out.println(user.getUserid());
+        System.out.println(user.getPwd());
         return userService.createToken(user);
     }
 

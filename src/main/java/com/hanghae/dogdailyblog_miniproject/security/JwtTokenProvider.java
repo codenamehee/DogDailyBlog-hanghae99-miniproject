@@ -38,36 +38,41 @@ public class JwtTokenProvider {
 
     // JWT 토큰 생성
     public String createToken(Authentication authentication) {
+
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        System.out.println("making token");
         long now = (new Date()).getTime();
 
         // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + tokenValidTime);
+
         return Jwts.builder()
                 .setSubject(authentication.getName())       // payload "sub": "name"
                 .claim(secretKey, authorities)        // payload "auth": "ROLE_USER"
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과        // payload "exp": 1516239022 (예시)// header "alg": "HS512"
                 .compact();
-
     }
 
     // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        System.out.println("token 검사");
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
+        System.out.println("토큰에서 회원 정보 추출");
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
+        System.out.println("헤더에서 토큰 값 빼오기");
         return request.getHeader("Authorization");
     }
 
