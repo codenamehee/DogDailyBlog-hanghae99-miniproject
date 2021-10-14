@@ -26,7 +26,7 @@ public class DogdailyblogMiniprojectApplication {
     @Bean
     public CommandLineRunner demo(ContentsRepository repository) {
         return (args) -> {
-            repository.save(new Contents("제목","이름", "내용", "주소"));
+            repository.save(new Contents("제목","닉네임","id", "내용", "주소"));
         };
     }
 }

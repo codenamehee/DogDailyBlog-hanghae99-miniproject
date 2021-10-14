@@ -23,7 +23,7 @@ public class ContentsService {
             return contents;
         }
         if (titleCheck.contains("script") || titleCheck.contains("<") || titleCheck.contains(">")){
-            Contents contents = new Contents("xss 멈춰",username, "xss 멈춰", "");
+            Contents contents = new Contents("xss 멈춰",username, " ", " ","xss 멈춰");
             ContentsRepository.save(contents);
             return contents;
         }

@@ -35,8 +35,8 @@ public class ContentsController {
     @PostMapping("/write")
     public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDatails){
         //로그인 되어 있는 ID의 username
-        String username = userDatails.getUser().getUsername();
-        Contents contents = ContentsService.createContents(requestDto, username);
+        String userid = userDatails.getUser().getUserid();
+        Contents contents = ContentsService.createContents(requestDto, userid);
         return contents;
     }
 
