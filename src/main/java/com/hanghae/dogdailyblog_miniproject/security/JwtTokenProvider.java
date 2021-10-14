@@ -30,7 +30,7 @@ public class JwtTokenProvider {
 
     private final UserDetailsService userDetailsService;
 
-    //객체 초기화, secretkey를 Base64로 인코딩한다.
+    // 객체 초기화, secretKey를 Base64로 인코딩한다.
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -44,26 +44,28 @@ public class JwtTokenProvider {
 
         long now = (new Date()).getTime();
 
-        //Access Token 생성
+        // Access Token 생성
         Date accessTokenExpiresIn = new Date(now + tokenValidTime);
         return Jwts.builder()
-                .setSubject(authentication.getName())
-                .claim(secretKey, authorities)
+                .setSubject(authentication.getName())       // payload "sub": "name"
+                .claim(secretKey, authorities)        // payload "auth": "ROLE_USER"
                 .setExpiration(accessTokenExpiresIn)
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과        // payload "exp": 1516239022 (예시)// header "alg": "HS512"
                 .compact();
+
     }
 
-    // Jwt 토큰에서 인증 정보 조회
+    // JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities())
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
+
     // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
@@ -78,5 +80,4 @@ public class JwtTokenProvider {
             return false;
         }
     }
-
 }
