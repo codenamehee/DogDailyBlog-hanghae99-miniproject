@@ -5,21 +5,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
 @Setter
 @Getter
 @ToString
 @NoArgsConstructor
 public class SignupRequestDto {
 
-    // 유효성 없는 회원가입 처리
     private String userid;
+
     private String username;
+
     private String pwd;
+
+    public SignupRequestDto(String userid, String username, String pwd) {
+        this.userid = userid;
+        this.username = username;
+        this.pwd = pwd;
     }
+}
 
 
 //    @NotBlank(message = "이메일을 입력해주세요.")
