@@ -48,11 +48,11 @@ public class UserService {
     }
 
     // 토큰 생성
-    public String createToken(UserRequestDto user) {
-        System.out.println("서비스에서 토큰 생성");
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(user.getUserid(), user.getPwd());
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        return jwtTokenProvider.createToken(authentication);
-    }
+//    public String createToken(UserRequestDto user) {
+//        System.out.println("서비스에서 토큰 생성");
+//        UsernamePasswordAuthenticationToken authenticationToken =
+//                new UsernamePasswordAuthenticationToken(user.getUserid(), user.getPwd());
+//        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+//        return jwtTokenProvider.createToken(authentication);
+//    }
 }

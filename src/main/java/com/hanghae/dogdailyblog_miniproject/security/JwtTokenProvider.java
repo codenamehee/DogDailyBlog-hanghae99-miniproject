@@ -7,7 +7,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
@@ -16,8 +15,6 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -37,11 +34,9 @@ public class JwtTokenProvider {
     }
 
     // JWT 토큰 생성
-    public String createToken(Authentication authentication) {
-
-        String authorities = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(","));
+    public String createToken(String userPk, String userid) {
+        Claims claims = Jwts.claims().setSubject(userPk);
+        claims.put("userid", userid);
 
         System.out.println("making token");
         long now = (new Date()).getTime();
@@ -50,8 +45,7 @@ public class JwtTokenProvider {
         Date accessTokenExpiresIn = new Date(now + tokenValidTime);
 
         return Jwts.builder()
-                .setSubject(authentication.getName())       // payload "sub": "name"
-                .claim(secretKey, authorities)        // payload "auth": "ROLE_USER"
+                .setClaims(claims)
                 .setExpiration(accessTokenExpiresIn)
                 .signWith(SignatureAlgorithm.HS256, secretKey)  // 사용할 암호화 알고리즘과        // payload "exp": 1516239022 (예시)// header "alg": "HS512"
                 .compact();
