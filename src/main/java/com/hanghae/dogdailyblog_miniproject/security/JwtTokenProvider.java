@@ -60,13 +60,11 @@ public class JwtTokenProvider {
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities())
     }
 
-
     // 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
-
-    //request의 header에서 token값을 가져옵니다. "Authorization" : "Token값"
+    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
@@ -80,4 +78,5 @@ public class JwtTokenProvider {
             return false;
         }
     }
+
 }
