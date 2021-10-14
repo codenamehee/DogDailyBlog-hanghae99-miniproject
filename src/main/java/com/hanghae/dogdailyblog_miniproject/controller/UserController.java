@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -39,16 +42,20 @@ public class UserController {
 
     //로그인
     @PostMapping("/user/login")
-    public String login(@RequestBody UserRequestDto requestDto) {
+    public Map<String,String> login(@RequestBody UserRequestDto requestDto) {
 
         User user = userRepository.findByUserid(requestDto.getUserid())
                 .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 유저입니다."));
-        if (!passwordEncoder.matches(user.getPwd(), requestDto.getPwd())) {
+        // matches뒤에 순서가 중요함(첫번째가 로우패스워드, 두번째가 인코드되어 저장되어있는 패스워드)
+        if (!passwordEncoder.matches(requestDto.getPwd(), user.getPwd())) {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
+        Map<String,String> result =new HashMap<>();
+        result.put("token",jwtTokenProvider.createToken(user.getUserid(), user.getUserid())); // "username" : {username}
 
-        return jwtTokenProvider.createToken(user.getUserid(), user.getPwd());
+
+        return result;
     }
 
 
