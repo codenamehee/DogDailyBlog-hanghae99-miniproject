@@ -15,6 +15,7 @@ public class ContentsService {
 
     @Transactional //메소드 동작을 쿼리문임을 선언
     public Contents createContents(ContentsRequestDto requestDto, String userid) {
+        System.out.println(userid);
         String contentsCheck = requestDto.getContents();
         String titleCheck = requestDto.getTitle();
         if (contentsCheck.contains("script") || contentsCheck.contains("<") || contentsCheck.contains(">")) {
@@ -30,6 +31,7 @@ public class ContentsService {
         // 요청받은 DTO로 저장할 객체만들기
         Contents contents = new Contents(requestDto, userid);
         ContentsRepository.save(contents);
+        System.out.println(contents);
         return contents;
     }
 

@@ -33,10 +33,16 @@ public class ContentsController {
     }
     //게시물 생성
     @PostMapping("/write")
-    public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDatails){
+    public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         //로그인 되어 있는 ID의 userid
-        String userid = userDatails.getUser().getUserid();
+        String userid = userDetails.getUsername();
+
+        System.out.println(userid);
+
         Contents contents = ContentsService.createContents(requestDto, userid);
+
+        System.out.println(contents);
+
         return contents;
     }
 
