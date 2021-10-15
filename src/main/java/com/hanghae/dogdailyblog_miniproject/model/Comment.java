@@ -19,10 +19,13 @@ public class Comment extends Timestamped {
     private Long postId;        //게시물번호
 
     @Column(nullable = false)
-    private Long userId;        //사용자 번호
+    private Long commentId;        //사용자 번호
 
     @Column(nullable = false)
-    private String name;          //사용자 이름
+    private String userid;          //사용자 이름
+
+    @Column(nullable = false)
+    private String username;          //사용자 이름
 
     @Column
     private String comment;     //댓글내용
@@ -30,15 +33,17 @@ public class Comment extends Timestamped {
     public Comment(CommentRequestDto requestDto) {
         //this.id = requestDto.getId();
         this.postId = requestDto.getPostId();
-        this.userId = requestDto.getUserId();
-        this.name = requestDto.getName();
+        this.commentId = requestDto.getCommentId();
+        this.username = requestDto.getUsername();
         this.comment = requestDto.getComment();
+        this.userid = requestDto.getUserid();
     }
 
     public void update(CommentRequestDto requestDto) {
         this.postId = requestDto.getPostId();
-        this.userId = requestDto.getUserId();
-        this.name = requestDto.getName();
+        this.commentId = requestDto.getCommentId();
+        this.username = requestDto.getUsername();
         this.comment = requestDto.getComment();
+        this.userid = requestDto.getUserid();
     }
 }

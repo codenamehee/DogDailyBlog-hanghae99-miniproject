@@ -8,7 +8,9 @@ import com.hanghae.dogdailyblog_miniproject.service.ContentsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.filechooser.FileSystemView;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class ContentsController {
     @PostMapping("/write")
     public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDatails){
         //로그인 되어 있는 ID의 userid
-        String userid = userDatails.getUser().getUserid();
+        String userid = userDatails.getUser().getUsername();
         Contents contents = ContentsService.createContents(requestDto, userid);
         return contents;
     }
@@ -53,5 +55,7 @@ public class ContentsController {
         ContentsRepository.deleteById(id);
         return id;
     }
+
+
 }
 

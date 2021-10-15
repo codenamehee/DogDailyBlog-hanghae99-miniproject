@@ -23,8 +23,8 @@ public class CommentController {
     //게시물에 댓글 달기
     @PostMapping("/detail/{id}")
     public Comment createComment(@RequestBody CommentRequestDto requestDto) {
-        System.out.println("userId: " + requestDto.getUserId() + ", postId: " + requestDto.getPostId() +
-                ", name: " + requestDto.getName() + ", comment" + requestDto.getComment());
+        System.out.println("commentId: " + requestDto.getCommentId() + ", postId: " + requestDto.getPostId() +
+                ", userid: " + requestDto.getUserid() + ", username" + requestDto.getUsername() + ", comment" + requestDto.getComment());
         return commentService.createComment(requestDto);
     }
 
@@ -32,16 +32,15 @@ public class CommentController {
     @PutMapping("/detail/{id}")
     public Long updateComment(@PathVariable Long id,
                               @RequestBody CommentRequestDto requestDto) {
-        System.out.println("id: " + id + ", userId: " + requestDto.getUserId() + ", postId: " + requestDto.getPostId() +
-                ", name: " + requestDto.getName() + ", comment: " + requestDto.getComment());
-
+        System.out.println("commentId: " + requestDto.getCommentId() + ", postId: " + requestDto.getPostId() +
+                ", userid: " + requestDto.getUserid() + ", username" + requestDto.getUsername() + ", comment" + requestDto.getComment());
         return commentService.updateComment(id, requestDto);
     }
 
-    //댓글삭제
-    @DeleteMapping("/detail/{id}")
-    public Long deleteComment(@PathVariable Long id) {
-        commentService.deleteComment(id);
-        return id;
-    }
+//    //댓글삭제
+//    @DeleteMapping("/detail/{id}")
+//    public Long deleteComment(@PathVariable Long id) {
+//        commentService.deleteComment(id);
+//        return id;
+//    }
 }
