@@ -16,6 +16,13 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
+    private final CommentRepository CommentRepository;
+
+    @GetMapping("/detail")
+    public List<Comment> getComments(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long commentId = userDetails.getUser().getId();
+        return CommentService.getComments(commentId);
+    }
 
     //해당 게시물에 대한 모든 댓글
     @GetMapping("/detail/{postId}")

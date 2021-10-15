@@ -33,11 +33,12 @@ public class ContentsController {
                 () ->new IllegalArgumentException("id가 존재하지 않습니다."));
         return contents;
     }
+
     //게시물 생성
     @PostMapping("/write")
     public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDatails){
         //로그인 되어 있는 ID의 userid
-        String userid = userDatails.getUser().getUsername();
+        String userid = userDatails.getUsername();
         Contents contents = ContentsService.createContents(requestDto, userid);
         return contents;
     }
