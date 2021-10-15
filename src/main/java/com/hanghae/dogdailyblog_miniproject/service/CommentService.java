@@ -15,28 +15,34 @@ public class CommentService {
 
     private final CommentRepository commentRepository;
 
-    public List<Comment> getComments(Long postId) {
-        return commentRepository.findAllByPostIdOrderByModifiedAtDesc(postId);
+   //---------------------------작동해야할것들-----------------------------------
+
+    public List<Comment> getComments(Long postid) {
+        return commentRepository.findAllByPostidOrderByCreatedAtDesc(postid);
     }
 
     @Transactional
-    public Comment createComment(CommentRequestDto requestDto) {
-        Comment comment = new Comment(requestDto);
+    public Comment createComment(CommentRequestDto requestDto, String userid) {
+        Comment comment = new Comment(requestDto, userid);
         return commentRepository.save(comment);
     }
 
-    @Transactional
-    public Long updateComment(Long id, CommentRequestDto requestDto) {
-        Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("CommentService) DB에 아이디값이 없습니다.")
-        );
-        comment.update(requestDto);
-        return comment.getId();
-    }
 
-    @Transactional
-    public Long deleteComment(Long id) {
-        commentRepository.deleteById(id);
-        return id;
-    }
+    //---------------------------------------------------------------------------
+
+
+//    @Transactional
+//    public Long updateComment(Long id, CommentRequestDto requestDto) {
+//        Comment comment = commentRepository.findById(id).orElseThrow(
+//                () -> new NullPointerException("CommentService) DB에 아이디값이 없습니다.")
+//        );
+//        comment.update(requestDto);
+//        return comment.getId();
+//    }
+//
+//    @Transactional
+//    public Long deleteComment(Long id) {
+//        commentRepository.deleteById(id);
+//        return id;
+//    }
 }

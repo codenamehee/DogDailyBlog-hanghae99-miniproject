@@ -10,10 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentRequestDto {
-    //private Long id;        //댓글번호
-    private Long postId;    //게시물번호
-    private Long userId;    //사용자 번호
-    private String name;      //사용자 이름
+    private Long id;        //댓글번호
+    private Long postid;    //게시물번호
+//    private Long userId;    //사용자 번호
+    private String username;      //사용자 이름
     private String comment; //댓글내용
 
 }
