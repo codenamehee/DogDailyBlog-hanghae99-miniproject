@@ -67,11 +67,13 @@ public class JwtTokenProvider {
     // 1. Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         System.out.println("헤더에서 토큰 값 빼오기");
+        System.out.println(request);
         return request.getHeader("X-AUTH-TOKEN");
     }
 
     // 3. 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
+        System.out.println("토큰 유효성 검사");
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());

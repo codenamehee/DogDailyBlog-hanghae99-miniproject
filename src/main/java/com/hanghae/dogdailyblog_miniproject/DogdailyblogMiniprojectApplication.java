@@ -17,5 +17,4 @@ public class DogdailyblogMiniprojectApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DogdailyblogMiniprojectApplication.class, args);}
-
 }
