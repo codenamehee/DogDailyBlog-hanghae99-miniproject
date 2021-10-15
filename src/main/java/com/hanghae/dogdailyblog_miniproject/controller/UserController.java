@@ -58,6 +58,12 @@ public class UserController {
         return result;
     }
 
+    // 로그인 체크(프론트 요청)
+//    @GetMapping("/user/check")
+//    public Map<String, String> logincheck(String token) {
+//        Map<String, String> loginuser = new HashMap<>();
+//        loginuser.put()
+//    }
 
 
 }

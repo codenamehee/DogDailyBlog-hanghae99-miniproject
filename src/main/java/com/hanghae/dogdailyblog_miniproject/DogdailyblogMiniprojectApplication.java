@@ -17,9 +17,4 @@ public class DogdailyblogMiniprojectApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DogdailyblogMiniprojectApplication.class, args);}
-
-    @PostConstruct
-    public void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-    }
 }
