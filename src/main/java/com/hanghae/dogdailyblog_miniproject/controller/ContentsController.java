@@ -18,7 +18,7 @@ public class ContentsController {
     private final ContentsRepository ContentsRepository;
     private final ContentsService ContentsService;
 
-
+    //메인페이지 게시글 조회
     @GetMapping("/")
     public List<Contents> getContents(){
         return ContentsRepository.findAllByOrderByCreatedAtDesc();
@@ -49,7 +49,7 @@ public class ContentsController {
 
     //게시글 삭제
     @DeleteMapping("/write/{id}")
-    public Long deletContents(@PathVariable Long id){
+    public Long deleteContents(@PathVariable Long id){
         ContentsRepository.deleteById(id);
         return id;
     }
