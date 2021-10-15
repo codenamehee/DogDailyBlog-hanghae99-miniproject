@@ -60,10 +60,10 @@ public class Contents extends Timestamped {
         this.contents = requestDto.getContents();
         this.imageurl = requestDto.getImageurl();
     }
-    public Contents(ContentsRequestDto requestDto, String username, String contents){
+    public Contents(ContentsRequestDto requestDto, String userid, String contents){
         this.title = requestDto.getTitle();
-        this.username = username;
-        this.userid = requestDto.getUserid();
+        this.username = requestDto.getUsername();
+        this.userid = userid;
         this.contents = contents;
         this.imageurl = requestDto.getImageurl();
     }

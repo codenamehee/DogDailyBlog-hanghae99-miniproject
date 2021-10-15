@@ -21,7 +21,7 @@ public class CommentController {
     @GetMapping("/detail")
     public List<Comment> getComments(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         Long commentId = userDetails.getUser().getId();
-        return CommentService.getComments(commentId);
+        return commentService.getComments(commentId);
     }
 
     //해당 게시물에 대한 모든 댓글
