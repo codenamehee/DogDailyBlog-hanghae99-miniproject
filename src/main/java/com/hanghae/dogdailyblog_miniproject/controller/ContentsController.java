@@ -18,9 +18,9 @@ public class ContentsController {
     private final ContentsRepository ContentsRepository;
     private final ContentsService ContentsService;
 
-    //메인페이지 게시글 조회
-    @GetMapping("/write")
-    public List<Contents> getContets(){
+
+    @GetMapping("/")
+    public List<Contents> getContents(){
         return ContentsRepository.findAllByOrderByCreatedAtDesc();
     }
 
@@ -34,7 +34,7 @@ public class ContentsController {
     //게시물 생성
     @PostMapping("/write")
     public Contents createContents(@RequestBody ContentsRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDatails){
-        //로그인 되어 있는 ID의 username
+        //로그인 되어 있는 ID의 userid
         String userid = userDatails.getUser().getUserid();
         Contents contents = ContentsService.createContents(requestDto, userid);
         return contents;
