@@ -25,7 +25,7 @@ public class Comment extends Timestamped {
     private String userid;          //사용자 이름
 
     @Column(nullable = false)
-    private String username;          //사용자 이름
+    private String username;
 
     @Column
     private String comment;     //댓글내용

@@ -2,8 +2,11 @@ package com.hanghae.dogdailyblog_miniproject.controller;
 
 import com.hanghae.dogdailyblog_miniproject.model.Comment;
 import com.hanghae.dogdailyblog_miniproject.dto.CommentRequestDto;
+import com.hanghae.dogdailyblog_miniproject.repository.CommentRepository;
+import com.hanghae.dogdailyblog_miniproject.security.UserDetailsImpl;
 import com.hanghae.dogdailyblog_miniproject.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +18,8 @@ public class CommentController {
     private final CommentService commentService;
 
     //해당 게시물에 대한 모든 댓글
-    @GetMapping("/detail/{id}")
-    public List<Comment> getComments(@PathVariable("id") Long postId) {
+    @GetMapping("/detail/{postId}")
+    public List<Comment> getComments(@PathVariable Long postId) {
         return commentService.getComments(postId);
     }
 
