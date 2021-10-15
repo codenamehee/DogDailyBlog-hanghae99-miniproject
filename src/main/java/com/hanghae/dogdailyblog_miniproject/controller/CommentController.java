@@ -16,41 +16,43 @@ import java.util.List;
 public class CommentController {
 
     private final CommentService commentService;
-    private final CommentRepository CommentRepository;
+    private final CommentRepository commentRepository;
 
     @GetMapping("/detail")
-    public List<Comment> getComments(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        Long commentId = userDetails.getUser().getId();
-        return commentService.getComments(commentId);
+    public List<Comment> getReply(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Long postid = userDetails.getUser().getId();
+        return commentService.getComment(postid);
     }
 
-    //해당 게시물에 대한 모든 댓글
-    @GetMapping("/detail/{postId}")
-    public List<Comment> getComments(@PathVariable Long postId) {
-        return commentService.getComments(postId);
+    // 게시글 id 로 댓글 조회
+    @GetMapping("/detail/{postid}")
+    public List<Comment> getComment(@PathVariable Long postid) {
+        return commentService.getComment(postid);
     }
 
-    //게시물에 댓글 달기
-    @PostMapping("/detail/{id}")
-    public Comment createComment(@RequestBody CommentRequestDto requestDto) {
-        System.out.println("commentId: " + requestDto.getCommentId() + ", postId: " + requestDto.getPostId() +
-                ", userid: " + requestDto.getUserid() + ", username" + requestDto.getUsername() + ", comment" + requestDto.getComment());
-        return commentService.createComment(requestDto);
+    // 댓글 작성
+    @PostMapping("/detail")
+    public boolean createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        // 로그인 되어 있는 ID
+        if (userDetails != null) {
+            Long postid = userDetails.getUser().getId();
+            commentService.createComment(requestDto, postid);
+            return true;
+        }
+        return false;
     }
 
-    //댓글 수정
-    @PutMapping("/detail/{id}")
-    public Long updateComment(@PathVariable Long id,
-                              @RequestBody CommentRequestDto requestDto) {
-        System.out.println("commentId: " + requestDto.getCommentId() + ", postId: " + requestDto.getPostId() +
-                ", userid: " + requestDto.getUserid() + ", username" + requestDto.getUsername() + ", comment" + requestDto.getComment());
-        return commentService.updateComment(id, requestDto);
+    // 댓글 수정
+    @PutMapping("/detail/{postid}")
+    public Long updateComment(@PathVariable Long postid, @RequestBody CommentRequestDto requestDto) {
+        commentService.update(postid, requestDto);
+        return postid;
     }
 
-//    //댓글삭제
-//    @DeleteMapping("/detail/{id}")
-//    public Long deleteComment(@PathVariable Long id) {
-//        commentService.deleteComment(id);
-//        return id;
-//    }
+    // 댓글 삭제
+    @DeleteMapping("/detail/{postid}")
+    public List<Comment> deleteComment(@PathVariable Long postid) {
+        commentRepository.deleteById(postid);
+        return commentService.getComment(postid);
+    }
 }

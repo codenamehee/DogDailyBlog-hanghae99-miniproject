@@ -13,30 +13,34 @@ import java.util.List;
 @Service
 public class CommentService {
 
-    private final CommentRepository commentRepository;
+    private final CommentRepository CommentRepository;
 
-    public List<Comment> getComments(Long postId) {
-        return commentRepository.findAllByPostIdOrderByModifiedAtDesc(postId);
+    // 댓글 조회
+    public List<Comment> getComment(Long commentid) {
+        return CommentRepository.findAllByCommentidOrderByModifiedAtDesc(commentid);
     }
 
+    // 댓글 작성
     @Transactional
-    public Comment createComment(CommentRequestDto requestDto) {
-        Comment comment = new Comment(requestDto);
-        return commentRepository.save(comment);
+    public Comment createComment(CommentRequestDto requestDto, Long commentid) {
+        String commentCheck = requestDto.getComment();
+        if (commentCheck.contains("script")|| commentCheck.contains("<")||commentCheck.contains(">")){
+            Comment comment = new Comment(requestDto, commentid);
+            CommentRepository.save(comment);
+            return comment;
+        }
+        // 요청받은 DTO 로 DB에 저장할 객체 만들기
+        Comment comment = new Comment(requestDto, commentid);
+        CommentRepository.save(comment);
+        return comment;
     }
 
+    // 댓글 수정
     @Transactional
-    public Long updateComment(Long id, CommentRequestDto requestDto) {
-        Comment comment = commentRepository.findById(id).orElseThrow(
-                () -> new NullPointerException("CommentService) DB에 아이디값이 없습니다.")
+    public void update(Long postid, CommentRequestDto requestDto) {
+        Comment comment = CommentRepository.findById(postid).orElseThrow(
+                () -> new IllegalArgumentException("존재하지 않습니다.")
         );
         comment.update(requestDto);
-        return comment.getId();
-    }
-
-    @Transactional
-    public Long deleteComment(Long id) {
-        commentRepository.deleteById(id);
-        return id;
     }
 }
