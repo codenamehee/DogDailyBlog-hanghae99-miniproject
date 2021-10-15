@@ -51,27 +51,29 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    // JWT 토큰에서 인증 정보 조회
+    // 3...? JWT 토큰에서 인증 정보 조회
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
         System.out.println("token 검사");
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
-    // 토큰에서 회원 정보 추출
+    // 2. 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
         System.out.println("토큰에서 회원 정보 추출");
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 
-    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
+    // 1. Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
     public String resolveToken(HttpServletRequest request) {
         System.out.println("헤더에서 토큰 값 빼오기");
+        System.out.println(request);
         return request.getHeader("X-AUTH-TOKEN");
     }
 
-    // 토큰의 유효성 + 만료일자 확인
+    // 3. 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
+        System.out.println("토큰 유효성 검사");
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return !claims.getBody().getExpiration().before(new Date());
