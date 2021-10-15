@@ -4,9 +4,10 @@ import lombok.Getter;
 
 @Getter
 public class ContentsRequestDto {
-    private String title;
-    private String username;
-    private String contents;
-    private String imageurl;
+    private String title; // 제목
+    private String username;// 이름
+    private String userid; // id
+    private String contents; // 내용
+    private String imageurl; // 이미지 주소
 }
 
