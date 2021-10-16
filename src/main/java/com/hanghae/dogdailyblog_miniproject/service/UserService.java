@@ -24,10 +24,6 @@ public class UserService {
 
         String username = requestDto.getUsername();
 
-//        Optional<User> found = userRepository.findByUsername(username);
-//        if (found.isPresent()) {
-//            throw new ApiRequestException("중복된 사용자 ID 가 존재합니다.");
-//        }
 
         String password = requestDto.getPwd();
         password = passwordEncoder.encode(password);
@@ -37,6 +33,6 @@ public class UserService {
 
     }
 
-    // 토큰에서
-
 }
+
+// 회원가입 유효성 검사

@@ -33,7 +33,7 @@ public class UserController {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    // 회원 가입 요청 처리(유효성 검사 포함)
+    // 회원 가입 요청 처리
     @PostMapping("/user/signup")
     @ResponseBody
     public void registerUser(@RequestBody SignupRequestDto requestDto) {

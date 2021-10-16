@@ -10,14 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentRequestDto {
-    //private Long id;        //댓글번호
-    private Long postId;    //게시물번호
-    private Long userId;    //사용자 번호
-    private String name;      //사용자 이름
-    private String comment; //댓글내용
-
+    private Long postid;    // 댓글 달 게시글 번호
+    private String comment; // 댓글 내용
+    private String userid; // 댓글 작성자의 아이디(로그인된 아이디)
+    private Long userindex; // 댓글 작성자의 DB 인덱스 번호
 }
-
 //////댓글 필요 사항/////////
 // 게시글 id로 댓글 조회 contentId
 // 댓글 작성자의 닉네임 commentusername
