@@ -19,17 +19,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     // 로그인 요청한 회원의 회원정보 찾는 로직
-//    public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
-//        User user = userRepository.findByUserid(userid).orElseThrow(
-//                () -> new UsernameNotFoundException("Can't find " + userid)
-//        );
-//
-//        return new UserDetailsImpl(user);
-//    }
-    @Override
     public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
-        return (UserDetails) userRepository.findByUserid(userid)
-                .orElseThrow( () -> new UsernameNotFoundException("Can't find" + userid));
+        User user = userRepository.findByUserid(userid).orElseThrow(
+                () -> new UsernameNotFoundException("Can't find " + userid)
+        );
+
+        return new UserDetailsImpl(user);
     }
+//    @Override
+//    public UserDetails loadUserByUsername(String userid) throws UsernameNotFoundException {
+//        return (UserDetails) userRepository.findByUserid(userid)
+//                .orElseThrow( () -> new UsernameNotFoundException("Can't find" + userid));
+//    }
 
 }

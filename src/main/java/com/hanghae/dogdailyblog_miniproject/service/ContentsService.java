@@ -36,11 +36,11 @@ public class ContentsService {
     }
 
     @Transactional //메소드 동작을 쿼리문임을 선언
-    public Long update(Long id, ContentsRequestDto requestDto){
-        Contents Contents = ContentsRepository.findById(id).orElseThrow(
+    public Long update(Long postid, ContentsRequestDto requestDto){
+        Contents Contents = ContentsRepository.findById(postid).orElseThrow(
                 () -> new IllegalArgumentException("아이디가 존재하지 않습니다.")
         );
         Contents.update(requestDto);
-        return Contents.getId();
+        return Contents.getPostid();
     }
 }

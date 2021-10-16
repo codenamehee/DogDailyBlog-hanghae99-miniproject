@@ -22,8 +22,8 @@ public class JwtTokenProvider {
 
     private String secretKey = "webfirewood";
 
-    // 토큰 유효시간 30분
-    private long tokenValidTime = 240 * 60 * 1000L;
+    // 토큰 유효시간 48시간
+    private long tokenValidTime = 48 * 60 * 60 * 1000L;
 
     private final UserDetailsService userDetailsService;
 
@@ -61,6 +61,8 @@ public class JwtTokenProvider {
     // 2. 토큰에서 회원 정보 추출
     public String getUserPk(String token) {
         System.out.println("토큰에서 회원 정보 추출");
+        System.out.println(token);
+//        System.out.println(Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject());
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
 

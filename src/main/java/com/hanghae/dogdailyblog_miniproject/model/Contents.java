@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Contents extends Timestamped {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    private Long id;
+    private Long postid;
 
     @Column(nullable = false)
     private String title;

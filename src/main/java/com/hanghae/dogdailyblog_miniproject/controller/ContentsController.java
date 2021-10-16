@@ -1,6 +1,7 @@
 package com.hanghae.dogdailyblog_miniproject.controller;
 
 import com.hanghae.dogdailyblog_miniproject.dto.ContentsRequestDto;
+import com.hanghae.dogdailyblog_miniproject.model.Comment;
 import com.hanghae.dogdailyblog_miniproject.model.Contents;
 import com.hanghae.dogdailyblog_miniproject.repository.ContentsRepository;
 import com.hanghae.dogdailyblog_miniproject.security.UserDetailsImpl;
@@ -25,9 +26,9 @@ public class ContentsController {
     }
 
     //개별 게시물 조회
-    @GetMapping("/write/{id}")
-    public Contents getContents(@PathVariable Long id){
-        Contents contents = ContentsRepository.findById(id).orElseThrow(
+    @GetMapping("/write/{postid}")
+    public Contents getContents(@PathVariable Long postid){
+        Contents contents = ContentsRepository.findById(postid).orElseThrow(
                 () ->new IllegalArgumentException("id가 존재하지 않습니다."));
         return contents;
     }
@@ -47,17 +48,17 @@ public class ContentsController {
     }
 
     //게시물 수정
-    @PutMapping("/write/{id}")
-    public Long updateContents(@PathVariable Long id, @RequestBody ContentsRequestDto requestDto){
-        ContentsService.update(id,requestDto);
-        return id;
+    @PutMapping("/write/{postid}")
+    public Long updateContents(@PathVariable Long postid, @RequestBody ContentsRequestDto requestDto){
+        ContentsService.update(postid,requestDto);
+        return postid;
     }
 
     //게시글 삭제
-    @DeleteMapping("/write/{id}")
-    public Long deleteContents(@PathVariable Long id){
-        ContentsRepository.deleteById(id);
-        return id;
+    @DeleteMapping("/edit/{postid}")
+    public List<Contents> deleteContents(@PathVariable Long postid){
+        ContentsRepository.deleteById(postid);
+        return ContentsRepository.findAllByOrderByCreatedAtDesc();
     }
 }
 

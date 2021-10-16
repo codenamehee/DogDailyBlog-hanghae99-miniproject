@@ -16,7 +16,7 @@ public class CommentController {
 
     //해당 게시물에 대한 모든 댓글
     @GetMapping("/detail/{id}")
-    public List<Comment> getComments(@PathVariable("id") Long postId) {
+    public List<Comment> getComments(@PathVariable Long postId) {
         return commentService.getComments(postId);
     }
 
@@ -29,19 +29,19 @@ public class CommentController {
     }
 
     //댓글 수정
-    @PutMapping("/detail/{id}")
-    public Long updateComment(@PathVariable Long id,
-                              @RequestBody CommentRequestDto requestDto) {
-        System.out.println("id: " + id + ", userId: " + requestDto.getUserId() + ", postId: " + requestDto.getPostId() +
-                ", name: " + requestDto.getName() + ", comment: " + requestDto.getComment());
-
-        return commentService.updateComment(id, requestDto);
-    }
+//    @PutMapping("/detail/{id}")
+//    public Long updateComment(@PathVariable Long id,
+//                              @RequestBody CommentRequestDto requestDto) {
+//        System.out.println("id: " + id + ", userId: " + requestDto.getUserId() + ", postId: " + requestDto.getPostId() +
+//                ", name: " + requestDto.getName() + ", comment: " + requestDto.getComment());
+//
+//        return commentService.updateComment(id, requestDto);
+//    }
 
     //댓글삭제
-    @DeleteMapping("/detail/{id}")
-    public Long deleteComment(@PathVariable Long id) {
-        commentService.deleteComment(id);
-        return id;
-    }
+//    @DeleteMapping("/detail/{id}")
+//    public Long deleteComment(@PathVariable Long id) {
+//        commentService.deleteComment(id);
+//        return id;
+//    }
 }
