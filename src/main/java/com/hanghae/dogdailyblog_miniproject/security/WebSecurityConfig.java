@@ -36,8 +36,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CorsConfiguration configuration = new CorsConfiguration();
 
         // 허용할 URL
-        configuration.addAllowedOrigin("http://localhost:3000");
-        configuration.addAllowedOrigin("http://localhost:8080");
+        configuration.addAllowedOrigin("http://gritdeveloper.shop.s3-website.ap-northeast-2.amazonaws.com/");
+        configuration.addAllowedOrigin("http://gritdeveloper.shop/");
         // 허용할 Header
         configuration.addAllowedHeader("*");
         // 허용할 Http Method

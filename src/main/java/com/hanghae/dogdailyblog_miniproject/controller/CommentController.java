@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -59,19 +60,25 @@ public class CommentController {
 //    }
 
     // 댓글 삭제
+    @DeleteMapping("/detail/{commentid}")
+    public List<Comment> deleteComment(@PathVariable Long commentid, @RequestBody Map<String, Long> map) {
+        Long postid = map.get("postid");
+        System.out.println(postid + "받은 postid");
+        commentRepository.deleteById(commentid);
+        System.out.println(postid + "코멘트 삭제 후 postid");
+        List<Comment> commentList = commentRepository.findAllByPostidOrderByModifiedAtDesc(postid);
+        System.out.println("commentList = " + commentList);
+        System.out.println(postid + "리턴 전 postid");
+        return commentList;
+    }
+
+    // 댓글 삭제 2
 //    @DeleteMapping("/detail/{commentid}")
-//    public List<Comment> deleteComment(@PathVariable Long commentid, Long postid) {
+//    public List<Comment> deleteComment(@PathVariable Long commentid, @RequestBody CommentRequestDto requestDto) {
+//        Long postid = requestDto.getPostid();
 //        commentRepository.deleteById(commentid);
 //        return commentRepository.findAllByPostidOrderByModifiedAtDesc(postid);
 //    }
-
-    // 댓글 삭제 2
-    @DeleteMapping("/detail/{commentid}")
-    public List<Comment> deleteComment(@PathVariable Long commentid, @RequestBody CommentRequestDto requestDto) {
-        Long postid = requestDto.getPostid();
-        commentRepository.deleteById(commentid);
-        return commentRepository.findAllByPostidOrderByModifiedAtDesc(postid);
-    }
 }
 
     //댓글 수정
